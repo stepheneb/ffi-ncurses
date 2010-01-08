@@ -22,7 +22,7 @@ module FFI
     if ENV["RUBY_FFI_NCURSES_LIB"].to_s != ""
       LIB_HANDLE = ffi_lib( ENV["RUBY_FFI_NCURSES_LIB"] ).first
     else
-      LIB_HANDLE = ffi_lib( 'ncurses', 'libncurses.so.5', 'XCurses' ).first
+      LIB_HANDLE = ffi_lib( ['ncurses', 'libncurses.so.5', 'XCurses'] ).first
     end
 
     begin
