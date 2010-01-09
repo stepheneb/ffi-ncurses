@@ -4,13 +4,8 @@
 
 begin
   require 'bones'
-  Bones.setup
 rescue LoadError
-  begin
-    load 'tasks/setup.rb'
-  rescue LoadError
-    raise RuntimeError, '### please install the "bones" gem ###'
-  end
+  abort '### Please install the "bones" gem ###'
 end
 
 if File.exist?('local/config.rb')
@@ -22,17 +17,16 @@ require 'ffi-ncurses'
 
 task :default => 'spec:run'
 
-# see tasks/setup.rb for full list of options
-
-PROJ.name = 'ffi-ncurses'
-PROJ.authors = ["Sean O'Halpin"]
-PROJ.email = 'sean.ohalpin@gmail.com'
-PROJ.url = 'http://github.com/seanohalpin/ffi-ncurses'
-PROJ.summary = "FFI wrapper for ncurses"
-PROJ.version = FFI::NCurses::VERSION
-PROJ.rubyforge.name = 'ffi-ncurses'
-
-PROJ.description = <<EOT
+Bones {
+  name              'ffi-ncurses'
+  authors           "Sean O'Halpin"
+  email             'sean.ohalpin@gmail.com'
+  url               'http://github.com/seanohalpin/ffi-ncurses'
+  summary           'FFI wrapper for ncurses'
+  version           FFI::NCurses::VERSION
+  # rubyforge.name    'ffi-ncurses'
+  readme_file       'README.rdoc'
+  description  <<-EOT
 A wrapper for ncurses 5.x. Tested on Mac OS X 10.4 (Tiger) and Ubuntu
 8.04 with ruby 1.8.6 using ruby-ffi (>= 0.2.0) and JRuby 1.1.6.
 
@@ -42,25 +36,19 @@ is to provide a 'close to the metal' wrapper around the ncurses
 library upon which you can build your own abstractions.
 
 See the examples directory for real working examples.
-EOT
+  EOT
 
-# gem
-# PROJ.gem.dependencies << ["ffi", ">= 0.2.0"]
+  rdoc.exclude ['^notes']
+  readme_file  'README.rdoc'
 
-# rdoc
-PROJ.rdoc.exclude << "^notes"
-PROJ.readme_file = 'README.rdoc'
+  # spec
+  spec.opts '--color'
 
-# spec
-PROJ.spec.opts << '--color'
+  # files
+  exclude  %w(tmp$ bak$ ~$ CVS \.svn ^pkg ^doc \.git local notes \.DS_Store)
+  exclude << '^tags$' << "^bug" << "^tools"
+  exclude << File.read('.gitignore').split(/\n/)
+  exclude << 'README.txt'
 
-# files
-PROJ.exclude = %w(tmp$ bak$ ~$ CVS \.svn ^pkg ^doc \.git local notes)
-PROJ.exclude << '^tags$' << "^bug" << "^tools"
-PROJ.exclude << File.read('.gitignore').split(/\n/)
-
-# notes
-#PROJ.notes.exclude = %w(^README\.txt$ ^data/)
-PROJ.notes.extensions << '.org'
-
-# EOF
+  colorize false
+}
