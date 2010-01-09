@@ -202,6 +202,23 @@ get/setsyx macros).
 This requires the implementation of +find_sym+ in JRuby (expected in
 JRuby 1.1.7).
 
+== Building the ffi-ncurses gem from source
+
+ffi-ncurses uses bones to manage gem development: http://gemcutter.org/gems/bones
+
+First install the gem development dependencies for working on ffi-ncurses
+  
+  gem install little-plugger loquacious bones rubyforge bones-extras
+
+The source code for ffi-ncurses is hosted at github: http://github.com/seanohalpin/ffi-ncurses
+
+  git clone git://github.com/seanohalpin/ffi-ncurses.git
+  
+  cd ffi-ncurses
+  rake -T
+
+You should see the list of gem development tasks.
+
 == Tests
 
 This is tricky - I'm not sure exactly how to properly test a wrapper
